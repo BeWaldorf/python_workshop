@@ -4,6 +4,8 @@ from trap_controller import TrapController
 from overworld_object_controller import OverworldObjectController
 from player_controller import PlayerController
 
+BLOCK_OFFSET = 160
+
 class OverworldModel():
     width: int
     height: int
@@ -21,7 +23,7 @@ class OverworldModel():
         terrain_coords  = terrain_master.get_terrain_coords()
         self.terrain    = self._create_terrain(window, terrain_coords)
         
-        self.trap       = TrapController(window, 100, 800 - 160)
+        self.trap       = TrapController(window, width // 2, height - BLOCK_OFFSET)
         
         self.object_constrollers.append(self.trap)
         

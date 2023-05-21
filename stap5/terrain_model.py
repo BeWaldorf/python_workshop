@@ -21,9 +21,9 @@ class TerrainModel(OverworldObjectModel):
         return pygame.transform.scale2x(block)
 
     def _get_floor_coords(self) -> list[list[int]]:
-        world_length, world_height = self.WORLD_SIZE
+        world_width, world_height = self.WORLD_SIZE
         coords = []
-        for x_coord in range(-world_length // self.BLOCK_SIZE, (world_length * 2) // self.BLOCK_SIZE ):
+        for x_coord in range(-world_width // self.BLOCK_SIZE, (world_width * 2) // self.BLOCK_SIZE ):
             coord = [x_coord * self.BLOCK_SIZE, world_height - self.BLOCK_SIZE]
             coords.append(coord)
         return coords

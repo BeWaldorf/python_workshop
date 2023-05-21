@@ -5,9 +5,9 @@ from os.path import join, isfile
 class OverworldObjectModel(pygame.sprite.Sprite):
     ANIMATION_DELAY: int= 3
     
-    WORLD_SIZE: tuple[int, int] = (1000,800)
-    WORLD_HEIGHT: int = 800
-    WORLD_LENGTH: int = 1000
+    WORLD_HEIGHT: int = 900
+    WORLD_WIDTH: int = 1600
+    WORLD_SIZE: tuple[int, int] = (WORLD_WIDTH, WORLD_HEIGHT)
     
     BLOCK_SIZE: int = 96
 
@@ -102,7 +102,6 @@ class OverworldObjectModel(pygame.sprite.Sprite):
             self._reset_animation()
         return sprite_sheet[sprite_index]
     
-    
     def _reset_animation(self):
         self.animation_counter = 0
         self.reset_animation_flag = False
@@ -131,7 +130,6 @@ class OverworldObjectModel(pygame.sprite.Sprite):
     
     def _flip(self, sprites: list):
         return [pygame.transform.flip(sprite, True, False) for sprite in sprites]
-    
         
     def _make_block_dict(self):
         block_sprite_coords = [
@@ -156,6 +154,7 @@ class OverworldObjectModel(pygame.sprite.Sprite):
             result.blit(sprite_surface, (0, 0), pygame.rect.Rect(0, 0, 96, 96))
             block_dict[block_names[sprite_index]] = result
         return block_dict
+    
     def _get_Terrain_coords(self) -> list[list[int]]:
         _, world_height = self.WORLD_SIZE
         coords = []

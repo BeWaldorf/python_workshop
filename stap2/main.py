@@ -3,8 +3,8 @@ import pygame
 def main():
     print("hello world")
     pygame.init()
-    pygame.display.set_caption("platformer")
-    pygame.display.set_mode((1000, 800))
+    pygame.display.set_caption("Platformer")
+    pygame.display.set_mode((1600, 900))
     run = True
     while run:
         for event in pygame.event.get():

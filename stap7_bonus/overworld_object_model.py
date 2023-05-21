@@ -3,11 +3,12 @@ from os import listdir
 from os.path import join, isfile
 
 class OverworldObjectModel(pygame.sprite.Sprite):
-    ANIMATION_DELAY: int= 3
+    ANIMATION_DELAY: int = 3
     VELOCITY: int = None
-    WORLD_SIZE: tuple[int, int] = (1000,800)
-    WORLD_HEIGHT: int = 800
-    WORLD_LENGTH: int = 1000
+
+    WORLD_HEIGHT: int = 900
+    WORLD_WIDTH: int = 1600
+    WORLD_SIZE: tuple[int, int] = (WORLD_WIDTH, WORLD_HEIGHT)
     
     BLOCK_SIZE: int = 96
 
@@ -146,7 +147,6 @@ class OverworldObjectModel(pygame.sprite.Sprite):
     
     def _flip(self, sprites: list):
         return [pygame.transform.flip(sprite, True, False) for sprite in sprites]
-    
         
     def _make_block_dict(self):
         block_sprite_coords = [
@@ -257,7 +257,6 @@ class OverworldObjectModel(pygame.sprite.Sprite):
         self.update()
         return collided_object
     
-    
     # Deze functie is verouderd sinds kortere workshop. eruit?
     def collision_handler(self, objects: list[pygame.sprite.Sprite], dx, dy):
         collided_objects = []
@@ -287,5 +286,4 @@ class OverworldObjectModel(pygame.sprite.Sprite):
         for obj in collision_indicators:
             if obj and obj.type == "Trap":
                 self.make_hit()
-        
         

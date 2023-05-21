@@ -2,13 +2,11 @@ import pygame
 from overworld_model    import OverworldModel
 from overworld_view     import OverworldView
 
-
 class OverworldController():
     width: int
     heigth: int
     window: pygame.Surface
     clock : pygame.time.Clock
-    
     
     def __init__(self, window: pygame.Surface, clock: pygame.time.Clock) -> None:
         self.window         = window
@@ -20,7 +18,6 @@ class OverworldController():
         self.world_view.draw_terrain(self.world_model.terrain)
         
         self.clock = clock
-        
     
     def game_loop(self) -> bool:
         self.clock.tick(self.world_model.FPS)

@@ -9,8 +9,8 @@ class OverworldController():
     
     def __init__(self, window: pygame.Surface) -> None:
         self.window         = window
-        self.width  = window.get_width()
-        self.height = window.get_height()
+        self.width          = window.get_width()
+        self.height         = window.get_height()
         self.world_model    = OverworldModel(self.width, self.height)
         self.world_view     = OverworldView(self.window)
         self.world_view.draw_brackground(self.window, "Blue.png")

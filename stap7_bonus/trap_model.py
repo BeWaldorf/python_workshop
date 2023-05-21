@@ -11,4 +11,3 @@ class TrapModel(OverworldObjectModel):
         super().logic_loop()
         self.image = self.select_sprite(self.state)
         
-        
