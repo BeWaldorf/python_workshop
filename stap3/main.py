@@ -7,9 +7,9 @@ SCREEN_HEIGHT: int = 900
 def main():
     print("hello world")
     pygame.init()
-    pygame.display.set_caption("platformer")
+    pygame.display.set_caption("Platformer")
     window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    draw_brackground(window, "Green.png")
+    draw_brackground(window, "Blue.png")
     run = True
     while run:
         for event in pygame.event.get():

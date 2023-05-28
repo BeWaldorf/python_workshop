@@ -6,7 +6,7 @@ SCREEN_HEIGHT: int = 900
 
 def main():
     pygame.init()
-    pygame.display.set_caption("Platformer")
+    pygame.display.set_caption("platformer")
     window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     c = OverworldController(window)
     
@@ -14,6 +14,6 @@ def main():
     while run:
         run = c.game_loop()
     pygame.quit()
-     
+
 if __name__ == "__main__":
     main()
