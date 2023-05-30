@@ -5,8 +5,8 @@ from os.path import join, isfile
 class OverworldObjectModel(pygame.sprite.Sprite):
     ANIMATION_DELAY: int= 3
     
-    WORLD_HEIGHT: int = 900
-    WORLD_WIDTH: int = 1600
+    WORLD_HEIGHT: int = 720
+    WORLD_WIDTH: int = 1280
     WORLD_SIZE: tuple[int, int] = (WORLD_WIDTH, WORLD_HEIGHT)
     
     BLOCK_SIZE: int = 96
@@ -166,5 +166,4 @@ class OverworldObjectModel(pygame.sprite.Sprite):
         for block in range(5):
             coords.append([(self.BLOCK_SIZE * block) + self.BLOCK_SIZE * 7, world_height - (self.BLOCK_SIZE * 6)])
         return coords
-        return coords
-    
+        
