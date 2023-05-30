@@ -12,7 +12,7 @@ class TerrainController(OverworldObjectController):
         
         super().__init__(window)
         self._make_mv(x, y, size)
-        self.obj_view.draw_object(self.obj_model.get_image(), self.obj_model.get_coords())
+        self.obj_view.draw_object(self.obj_model.get_block_sprite(terrain_type), self.obj_model.get_coords())
         
     def _make_mv(self, x, y, size) -> None:
         self.obj_model: TerrainModel = TerrainModel(x, y)

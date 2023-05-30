@@ -14,7 +14,7 @@ class OverworldController():
         self.height         = window.get_height()
         self.world_model    = OverworldModel(window, self.width, self.height)
         self.world_view     = OverworldView(self.window)
-        self.world_view.draw_brackground(self.window, "Blue.png")
+        self.world_view.draw_brackground(self.window, "Pink.png")
         self.world_view.draw_terrain(self.world_model.terrain)
         
         self.clock = clock

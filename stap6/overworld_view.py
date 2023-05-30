@@ -3,8 +3,8 @@ from os.path import join
 from terrain_controller import TerrainController
 from trap_controller import TrapController
 
-SCREEN_WIDTH: int = 1600
-SCREEN_HEIGHT: int = 900
+SCREEN_WIDTH: int = 1280
+SCREEN_HEIGHT: int = 720
 
 class OverworldView():
     window:pygame.Surface
