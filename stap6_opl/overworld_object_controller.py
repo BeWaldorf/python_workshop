@@ -8,7 +8,7 @@ class OverworldObjectController():
     
     def __init__(self, window: pygame.Surface) -> None:
         self.window = window
-        
+    
     def _make_mv(self) -> None:
         pass
     

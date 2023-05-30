@@ -7,28 +7,40 @@ from player_controller import PlayerController
 BLOCK_OFFSET = 160
 
 class OverworldModel():
+    # Global variables:
     width: int
     height: int
     window: pygame.Surface
     
-    object_constrollers: list[OverworldObjectController] = []
+    object_controllers: list[OverworldObjectController] = []
     
     FPS:int = 60
     
+    # Constructor:
     def __init__(self, window, width: int, height: int) -> None:
         self.width = width
         self.height = height
-        
         terrain_master  = TerrainController(None, None, None, None, None, True)
         terrain_coords  = terrain_master.get_terrain_coords()
         self.terrain    = self._create_terrain(window, terrain_coords)
-        
         self.trap       = TrapController(window, width // 2, height - BLOCK_OFFSET)
+        self.object_controllers.append(self.trap)
         
-        self.object_constrollers.append(self.trap)
-        
-        self.player     = PlayerController(window, 100, 100)
+
     
+    
+    # Private methods:
+    def _create_terrain(self, window, coords: list[list[int]]) -> list[TerrainController]:
+        blocks =  []
+        for coord in coords:
+            x = coord[0]
+            y = coord[1]
+            new_block = TerrainController(window, x, y, (96,96))
+            blocks.append(new_block)
+            self.object_controllers.append(new_block)
+        return blocks
+    
+    # Public methods:
     def set_window(self, window: pygame.Surface) -> None:
         self.window = window
     
@@ -45,13 +57,3 @@ class OverworldModel():
         
         self.player.obj_tick(self.FPS, keys, objects)
         return True
-    
-    def _create_terrain(self, window, coords: list[list[int]]) -> list[TerrainController]:
-        blocks =  []
-        for coord in coords:
-            x = coord[0]
-            y = coord[1]
-            new_block = TerrainController(window, x, y, (96,96))
-            blocks.append(new_block)
-            self.object_constrollers.append(new_block)
-        return blocks

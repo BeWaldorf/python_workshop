@@ -1,4 +1,3 @@
-import pygame
 from trap_model import TrapModel
 from trap_view import TrapView
 from overworld_object_controller import OverworldObjectController

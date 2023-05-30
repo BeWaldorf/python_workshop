@@ -14,16 +14,20 @@ class OverworldView():
         image: pygame.Surface  = pygame.image.load(join("assets", "Background", name))
         _, _, width, height = image.get_rect()
         tile_grid = []
-
         for column in range(SCREEN_WIDTH // width + 1):
             for row in range(SCREEN_HEIGHT // height + 1):
                 coordinate = (column * width, row * height)
                 tile_grid.append(coordinate)
-
         for tile_coord in tile_grid:
             window.blit(image, tile_coord)
-
-        pygame.display.update()
-    
-    def draw_loop(self) -> None:
+        
+        
+    def draw_terrain(self):
         pass
+
+    def draw_loop(self, bg_name: str) -> None:
+        
+        self.draw_brackground(self.window, bg_name)
+        
+        
+        pygame.display.update()

@@ -3,8 +3,9 @@ from os import listdir
 from os.path import join, isfile
 
 class OverworldObjectModel(pygame.sprite.Sprite):
-    ANIMATION_DELAY: int= 3
-    
+    ANIMATION_DELAY: int = 3
+    VELOCITY: int = None
+
     WORLD_HEIGHT: int = 720
     WORLD_WIDTH: int = 1280
     WORLD_SIZE: tuple[int, int] = (WORLD_WIDTH, WORLD_HEIGHT)
@@ -36,6 +37,12 @@ class OverworldObjectModel(pygame.sprite.Sprite):
     }
     
     _is_loopable: bool = True
+    fall_count = 0
+    is_hit= False
+    hit_count = 0
+    y_vel = 0
+    x_vel = 0
+    weight = 0
     
     def __init__(self, x: int, y: int, type: str):
         super().__init__()
@@ -54,6 +61,7 @@ class OverworldObjectModel(pygame.sprite.Sprite):
         self.sprite_sheet_dict: dict = self._load_object_sprite_sheets()
         self.animation_counter: int = 0
         self.reset_animation_flag: bool = False
+        self.direction: str = "left"
     
     def set_coords(self, x: int = None, y: int = None) -> None:
         if x != None:
@@ -72,6 +80,8 @@ class OverworldObjectModel(pygame.sprite.Sprite):
         return size
     
     def get_state(self) -> str:
+        if self.type == "Player":
+            return self._get_player_state()
         return self.state
     
     def set_state(self, obj_state) -> None:
@@ -100,11 +110,18 @@ class OverworldObjectModel(pygame.sprite.Sprite):
         if sprite_index > animation_length:
             self.reset_animation_flag = True
             self._reset_animation()
+        self.mask = pygame.mask.from_surface(sprite_sheet[sprite_index])
         return sprite_sheet[sprite_index]
-    
+      
     def _reset_animation(self):
         self.animation_counter = 0
         self.reset_animation_flag = False
+    
+    def update(self):
+        self.current_x = self.rect.x
+        self.current_y = self.rect.y
+        self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y))
+        self.mask = pygame.mask.from_surface(self.image)
     
     def _load_object_sprite_sheets(self):
         if self.type == "Terrain":
@@ -166,5 +183,111 @@ class OverworldObjectModel(pygame.sprite.Sprite):
         for block in range(5):
             coords.append([(self.BLOCK_SIZE * block) + self.BLOCK_SIZE * 7, world_height - (self.BLOCK_SIZE * 6)])
         return coords
-        return coords
     
+    def move(self, dx, dy):
+        self.current_x += dx
+        self.current_y += dy
+        self.rect.x += dx
+        self.rect.y += dy
+    
+    def landed(self):
+        self.fall_count = 0
+        self.y_vel = 0
+        self.jump_count = 0
+        
+    def hit_head(self):
+        self.count = 0
+        self.y_vel *= -1
+    
+    def make_hit(self):
+        self.is_hit = True
+        
+    def move_left(self, vel):
+        self.x_vel = -vel
+        if self.direction != "left":
+            self.direction = "left"
+            self.animation_count = 0
+            
+    def move_right(self, vel):
+        self.x_vel = vel
+        if self.direction != "right":
+            self.direction = "right"
+            self.animation_count = 0
+    
+    def _get_player_state(self)->str:
+        state = "idle"
+        if self.is_hit:
+            state = "hit"
+        elif self.y_vel < 0:
+            if self.jump_count == 1:
+                state = "jump"
+            elif self.jump_count == 2:
+                state = "double_jump"
+        elif self.y_vel > self.weight * 2:
+            state = "fall"
+        elif self.x_vel != 0:
+            state = "run"
+        return state
+    
+    def jump(self):
+        self.y_vel = -self.weight * 8
+        self.animation_count = 0
+        self.jump_count += 1
+        if self.jump_count == 1:
+            self.fall_count = 0
+
+    def _handle_vertical_collision(self, objects: list[pygame.sprite.Sprite], dy):
+        collided_objects = []
+        for obj in objects:
+            if pygame.sprite.collide_mask(self, obj):
+                if dy > 0:
+                    self.rect.bottom = obj.rect.top
+                    self.landed()
+                elif dy < 0:
+                    self.rect.top = obj.rect.bottom
+                    self.hit_head()
+                collided_objects.append(obj)
+        return collided_objects
+    
+    def _handle_horizontal_collision(self, objects: list[pygame.sprite.Sprite], dx):
+        self.move(dx, 0)
+        self.update()
+        collided_object = None
+        for obj in objects:
+            obj.update()
+            if pygame.sprite.collide_mask(self, obj):
+                collided_object = obj
+        self.move(-dx, 0)
+        self.update()
+        return collided_object
+    
+    # Deze functie is verouderd sinds kortere workshop. eruit?
+    def collision_handler(self, objects: list[pygame.sprite.Sprite], dx, dy):
+        collided_objects = []
+        collided_objects.extend(self._handle_vertical_collision(objects, dy))
+        collided_objects.extend(self._handle_horizontal_collision(objects, dx))
+        return collided_objects
+    
+    def _player_movement_handler(self, keys, objects: list[pygame.sprite.Sprite]):
+        self.update()
+        
+        # Eventueel dit als keydown event vs keypress array?
+        # if keys[pygame.K_SPACE] and self.jump_count < 2:
+        #     self.jump()
+        
+        self.x_vel = 0
+        collide_left = self._handle_horizontal_collision(objects, -self.VELOCITY * 2)
+        collide_right = self._handle_horizontal_collision( objects, self.VELOCITY * 2)
+
+        if keys[pygame.K_LEFT] and not collide_left:
+            self.move_left(self.VELOCITY)
+        if keys[pygame.K_RIGHT] and not collide_right:
+            self.move_right(self.VELOCITY)
+
+        vertical_collide = self._handle_vertical_collision(objects, self.y_vel)
+        collision_indicators = [collide_left, collide_right, *vertical_collide]
+
+        for obj in collision_indicators:
+            if obj and obj.type == "Trap":
+                self.make_hit()
+        

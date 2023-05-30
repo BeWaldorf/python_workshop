@@ -2,6 +2,7 @@ import pygame
 from os.path import join
 from terrain_controller import TerrainController
 from trap_controller import TrapController
+from player_controller import PlayerController
 
 SCREEN_WIDTH: int = 1280
 SCREEN_HEIGHT: int = 720
@@ -24,16 +25,20 @@ class OverworldView():
 
         for tile_coord in tile_grid:
             window.blit(image, tile_coord)
-
-        pygame.display.update()
     
     def draw_terrain(self, terrain_list:list[TerrainController]):
         for terrain in terrain_list:
-            type = "Grass"
+            type = "PinkGoo"
             surf = terrain.obj_model.select_sprite(type)
             coords = terrain.obj_model.get_coords()
             terrain.obj_view.draw_object(surf, coords)
     
-    def draw_loop(self, trap:TrapController) -> None:
+    # eerst trap en speler dan "fout laten zien" dan terrain en bg terug tekenen
+    def draw_loop(self, trap:TrapController, player: PlayerController, terrain_list:list[TerrainController], bg_name: str) -> None:
+        self.draw_brackground(self.window, bg_name)
+        self.draw_terrain(terrain_list)
         trap.obj_view.draw_loop(trap.obj_model.get_image(), trap.obj_model.get_coords())
+        
+        player.obj_view.draw_loop(player.obj_model.get_image(), player.obj_model.get_coords())
+        
         pygame.display.update()

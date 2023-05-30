@@ -7,5 +7,5 @@ class PlayerView(OverworldObjectView):
         super().__init__(window, size)
         
     
-    # def draw_loop(self, sprite, coords) -> None:
-    #     super().draw_loop(sprite, coords)
+    def draw_loop(self, sprite, coords) -> None:
+        super().draw_loop(sprite, coords)

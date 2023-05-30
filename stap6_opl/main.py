@@ -1,8 +1,8 @@
 import pygame
 from overworld_controller import OverworldController
 
-SCREEN_WIDTH: int = 1600
-SCREEN_HEIGHT: int = 900
+SCREEN_WIDTH: int = 1280
+SCREEN_HEIGHT: int = 720
 
 def main():
     pygame.init()
