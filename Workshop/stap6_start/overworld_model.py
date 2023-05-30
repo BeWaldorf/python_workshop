@@ -19,6 +19,7 @@ class OverworldModel():
         self.height = height
         terrain_master  = TerrainController(None, None, None, None, None, True)
         terrain_coords  = terrain_master.get_terrain_coords()
+        
         self.terrain    = self._create_terrain(window, terrain_coords)
     
     
