@@ -5,14 +5,14 @@ from os.path import join, isfile
 class OverworldObjectModel(pygame.sprite.Sprite):
     ANIMATION_DELAY: int= 3
     
-    WORLD_HEIGHT: int = 900
-    WORLD_WIDTH: int = 1600
+    WORLD_HEIGHT: int = 720
+    WORLD_WIDTH: int = 1280
     WORLD_SIZE: tuple[int, int] = (WORLD_WIDTH, WORLD_HEIGHT)
     
     BLOCK_SIZE: int = 96
 
     SOURCEFOLDER_PATH:dict[str, str] = {
-        "Player": "assets/MainCharacters/NinjaFrog",
+        "Player": "assets/MainCharacters/PinkMan",
         "Trap": join("assets", "Traps", "Fire"), # "assets/Traps/Fire",
         "Terrain": join("assets", "Terrain"), # "assets/Terrain"
     }

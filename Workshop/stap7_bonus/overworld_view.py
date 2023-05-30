@@ -4,8 +4,8 @@ from terrain_controller import TerrainController
 from trap_controller import TrapController
 from player_controller import PlayerController
 
-SCREEN_WIDTH: int = 1600
-SCREEN_HEIGHT: int = 900
+SCREEN_WIDTH: int = 1280
+SCREEN_HEIGHT: int = 720
 
 class OverworldView():
     window:pygame.Surface
@@ -28,7 +28,7 @@ class OverworldView():
     
     def draw_terrain(self, terrain_list:list[TerrainController]):
         for terrain in terrain_list:
-            type = "Grass"
+            type = "PinkGoo"
             surf = terrain.obj_model.select_sprite(type)
             coords = terrain.obj_model.get_coords()
             terrain.obj_view.draw_object(surf, coords)
