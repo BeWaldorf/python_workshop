@@ -166,5 +166,4 @@ class OverworldObjectModel(pygame.sprite.Sprite):
         for block in range(5):
             coords.append([(self.BLOCK_SIZE * block) + self.BLOCK_SIZE * 7, world_height - (self.BLOCK_SIZE * 6)])
         return coords
-        return coords
-    
+        
