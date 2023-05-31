@@ -34,11 +34,8 @@ class OverworldView():
             terrain.obj_view.draw_object(surf, coords)
     
     # eerst trap en speler dan "fout laten zien" dan terrain en bg terug tekenen
-    def draw_loop(self, trap:TrapController, player: PlayerController, terrain_list:list[TerrainController], bg_name: str) -> None:
+    def draw_loop(self, trap:TrapController, terrain_list:list[TerrainController], bg_name: str) -> None:
         self.draw_brackground(self.window, bg_name)
         self.draw_terrain(terrain_list)
         trap.obj_view.draw_loop(trap.obj_model.get_image(), trap.obj_model.get_coords())
-        
-        player.obj_view.draw_loop(player.obj_model.get_image(), player.obj_model.get_coords())
-        
         pygame.display.update()

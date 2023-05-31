@@ -24,10 +24,10 @@ class OverworldModel():
         terrain_coords  = terrain_master.get_terrain_coords()
         self.terrain    = self._create_terrain(window, terrain_coords)
         self.trap       = TrapController(window, width // 2, height - BLOCK_OFFSET)
+        self.player     = PlayerController(window, 110, 50)
+        
         self.object_controllers.append(self.trap)
         
-
-    
     
     # Private methods:
     def _create_terrain(self, window, coords: list[list[int]]) -> list[TerrainController]:

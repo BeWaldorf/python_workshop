@@ -44,16 +44,10 @@ class OverworldModel():
     def set_window(self, window: pygame.Surface) -> None:
         self.window = window
     
-    def logic_loop(self, keys, objects) -> bool:
+    def logic_loop(self, objects) -> bool:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
             
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and self.player.obj_model.jump_count < 2:
-                    self.player.obj_model.jump()
-            
         self.trap.obj_tick()
-        
-        self.player.obj_tick(self.FPS, keys, objects)
         return True
